@@ -16,6 +16,9 @@
     outline:none;
 }
 
+body.home {
+    background: #0a0002;
+}
 
 p {
     margin:0 0 15px 0;
@@ -80,7 +83,7 @@ a:active {
 }
 
 
-/* Reviews
+/* Reviews (back-end, shortcode)
 ---------------------------------------------- */
 .reviews {
    width: 100%;
