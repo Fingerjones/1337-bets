@@ -9,7 +9,7 @@
 
 /* Basic
 ---------------------------------------------- */
-* {
+.reviews, .reviews * {
     position: relative;
     box-sizing:border-box;
     border:none;
@@ -20,26 +20,26 @@ body.home {
     background: #0a0002;
 }
 
-p {
+.reviews p {
     margin:0 0 15px 0;
     line-height:1.7em;
 }
-p:last-child {
+.reviews p:last-child {
     margin-bottom:0;
 }
 
-a {
+.reviews a {
     display:inline-block;
     color: #3030e9;
     text-decoration: none;
     transition:all 0.3s ease;
 }
-a:hover,
-a:focus {
+.reviews a:hover,
+.reviews a:focus {
     color: #0000ff;
     text-decoration: underline;
 }
-a:active {
+.reviews a:active {
     transform:scale(0.9);
 }
 
