@@ -9,7 +9,7 @@
  * Plugin Name:       1337 Bets
  * Plugin URI:        https://1337bets.com
  * Description:       Get the latest reviews of all major betting platforms.
- * Version:           1.0.2
+ * Version:           1.0.3
  * Author:            Harrison Barnes
  * Author URI:        https://fingerjones.com
  */
@@ -23,7 +23,7 @@
 function activate_1337_bets() {
 
     // Get JSON Data
-    $json_data = file_get_contents(dirname( __FILE__ ) . '/data/data.json');
+    $json_data = file_get_contents(plugin_dir_url( __FILE__ ) . '/data/data.json');
     // Save Data to Option (data is static)
     add_option('leet_bets', $json_data);
     // Create Option for Admin Redirect
@@ -81,17 +81,17 @@ function admin_page_1337_bets_view() {
                 </div>
 
                 <div class="reviews">
-                    <div class="reviews-header">
-                        <div class="column">
+                    <div class="reviews-header d-flex flex-wrap">
+                        <div class="column text-center">
                             <p>Casino</p>
                         </div>
-                        <div class="column">
+                        <div class="column text-center">
                             <p>Bonus</p>
                         </div>
-                        <div class="column">
+                        <div class="column text-center">
                             <p>Features</p>
                         </div>
-                        <div class="column">
+                        <div class="column text-center">
                             <p>Play</p>
                         </div>
                     </div>
@@ -100,23 +100,46 @@ function admin_page_1337_bets_view() {
 
                         <!-- Review -->
                         <?php foreach($json_data as $review) : ?>
-                            <div class="review">
-                                <div class="column">
+                            <div class="review d-flex flex-wrap flex-a-center">
+                                <div class="column d-flex flex-column text-center">
                                     <img src="<?php echo $review->logo; ?>" alt="<?php echo $review->brand_id; ?>" class="logo">
                                     <a href="<?php echo $review->play_url . "/" . $review->brand_id; ?>" class="review">Review</a>
                                 </div>
-                                <div class="column">
-                                    <p class="rating"></p>
+                                <div class="column text-center">
+                                    <p class="rating">
+                                        <?php
+                                            switch($review->info->rating) {
+                                                case 0:
+                                                    echo "<i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
+                                                    break;
+                                                case 1:
+                                                    echo "<i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
+                                                    break;
+                                                case 2:
+                                                    echo "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
+                                                    break;
+                                                case 3:
+                                                    echo "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
+                                                    break;
+                                                case 4:
+                                                    echo "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i>";
+                                                    break;
+                                                case 5:
+                                                    echo "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
+                                                    break;                      
+                                            }
+                                        ?>
+                                    </p>
                                     <p class="bonus"><?php echo $review->info->bonus; ?></p>
                                 </div>
-                                <div class="column">
+                                <div class="column d-flex flex-j-center">
                                     <ul class="features">
                                         <?php foreach($review->info->features as $feature) : ?>
                                             <li><?php echo $feature; ?></li>
                                         <?php endforeach; ?>
                                     </ul>
                                 </div>
-                                <div class="column">
+                                <div class="column text-center">
                                     <a href="<?php echo $review->play_url; ?>" class="play-now button primary">Play Now</a>
                                     <p class="tos"><?php echo $review->terms_and_conditions; ?></p>
                                 </div>
@@ -148,6 +171,19 @@ function leet_bets_activation_redirect() {
     }
 }
 add_action( 'admin_init', 'leet_bets_activation_redirect' );
+
+
+/**
+ * 
+ * Load Admin/Front-End Scripts
+ *
+ */
+function leet_bets_scripts_fa() {
+    wp_enqueue_style( 'styles', plugin_dir_url( __FILE__ ) . 'css/style.css' );
+    wp_enqueue_script( 'font_awesome', 'https://kit.fontawesome.com/136ad106c5.js');
+}
+add_action('wp_enqueue_scripts','leet_bets_scripts_fa');
+add_action('admin_enqueue_scripts', 'leet_bets_scripts_fa');
 
 
 /**

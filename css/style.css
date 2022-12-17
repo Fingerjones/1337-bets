@@ -1,0 +1,145 @@
+/**
+ * 
+ * Back-End/Front-End Stylesheet
+ *
+ *
+ *
+ */
+
+
+/* Basic
+---------------------------------------------- */
+* {
+    position: relative;
+    box-sizing:border-box;
+    border:none;
+    outline:none;
+}
+
+
+p {
+    margin:0 0 15px 0;
+    line-height:1.7em;
+}
+p:last-child {
+    margin-bottom:0;
+}
+
+a {
+    display:inline-block;
+    color: #3030e9;
+    text-decoration: none;
+    transition:all 0.3s ease;
+}
+a:hover,
+a:focus {
+    color: #0000ff;
+    text-decoration: underline;
+}
+a:active {
+    transform:scale(0.9);
+}
+
+
+/* Utility Classes
+---------------------------------------------- */
+.text-center { text-align:center !important; }
+
+
+/* Flex Box */
+.d-flex { display:flex !important; }
+.flex-wrap { flex-wrap:wrap !important; }
+.flex-column { flex-direction:column !important; }
+.flex-j-center { justify-content:center !important; }
+.flex-a-center { align-items:center !important; }
+
+.column {
+    flex:1;
+    padding:0 15px;
+}
+
+
+/* Buttons */
+.button.primary {
+    height:42px;
+    line-height: 40px !important;
+    padding: 0 20px !important;
+    color: #fff !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    background: rgb(14, 109, 43) !important;
+    border: solid 1px rgb(14, 109, 43);
+    border-radius: 5px !important;
+    transition:all 0.3s ease;
+}
+.button.primary:hover,
+.button.primary:focus {
+    color: #fff !important;
+    text-decoration: none;
+    background: rgb(56 153 86) !important;
+}
+
+
+/* Reviews
+---------------------------------------------- */
+.reviews {
+   width: 100%;
+   max-width: 1280px;
+   margin: 0 auto;
+   padding: 10px;
+   background: #fff; 
+}
+
+    .reviews .reviews-header {
+        background: rgb(210, 159, 54);
+    }
+
+        .reviews .reviews-header .column {
+            padding:15px;
+        }
+
+    .reviews .reviews-content ul {
+        margin:0;
+        padding:0;
+        list-style:disc;
+        list-style-position: outside;
+    }
+
+        .reviews .review {
+            margin-bottom:20px;
+            padding:20px 0;
+            border-bottom:solid 1px #ccc;
+        }
+        .reviews .review:last-child {
+            border-bottom:none;
+        }
+
+            .reviews .review .fa-star {
+                color: #d29f36;
+            }
+
+            .reviews .review .tos {
+                font-size:12px;
+            }
+
+
+/* Media Queries
+---------------------------------------------- */
+@media (max-width: 768px) {
+
+    .column {
+        margin-bottom: 15px;
+    }
+    .column:last-child {
+        margin-bottom: 0;
+    }
+    
+    .reviews .reviews-header {
+        display:none !important;
+    }
+
+    .reviews .review {
+        flex-direction: column;
+    }
+    
+}
