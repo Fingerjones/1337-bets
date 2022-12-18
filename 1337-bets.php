@@ -9,7 +9,7 @@
  * Plugin Name:       1337 Bets
  * Plugin URI:        https://1337bets.com
  * Description:       Get the latest reviews of all major betting platforms.
- * Version:           1.0.4
+ * Version:           1.0.5
  * Author:            Harrison Barnes
  * Author URI:        https://fingerjones.com
  */
@@ -177,78 +177,94 @@ function reviews_view() {
     });
 
 
+    $reviews_view = "";
+        
+    foreach($json_data as $review) {
+        
+        $review_link = $review->play_url . "/" . $review->brand_id;
+        $ratings_view = "";
+    
+        switch($review->info->rating) {
+            case 0:
+                $ratings_view = "<i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
+                break;
+            case 1:
+                $ratings_view = "<i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
+                break;
+            case 2:
+                $ratings_view = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
+                break;
+            case 3:
+                $ratings_view = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
+                break;
+            case 4:
+                $ratings_view = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i>";
+                break;
+            case 5:
+                $ratings_view = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
+                break;                      
+        }
+        
+        $features_view = "";
+        
+        foreach($review->info->features as $feature) {
+            $features_view .= "<li>{$feature}</li>"; 
+        }
+        
+        $reviews_view .= "
+            <div class='review d-flex flex-wrap flex-a-center'>
+            
+                <div class='column d-flex flex-column text-center'>
+                    <img src='{$review->logo}' alt='{$review->brand_id}' class='logo'>
+                    <a href='{$review_link}' target='_blank' rel='nofollow' class='review'>Review</a>
+                </div>
+                
+                <div class='column text-center'>
+                    <p class='rating'>{$ratings_view}</p>
+                    <p class='bonus'>{$review->info->bonus}</p>
+                </div>
+                
+                <div class='column d-flex flex-j-center'>
+                    <ul class='features'>{$features_view}</ul>
+                </div>
+                
+                <div class='column text-center'>
+                    <a href='{$review->play_url}' class='play-now button primary'>Play Now</a>
+                    <p class='tos'>{$review->terms_and_conditions}</p>
+                </div>
+                
+            </div>
+        ";
+    }
+
+
     // View
-    ?>
-
-                <article class="reviews">
-                    <header class="reviews-header d-flex flex-wrap">
-                        <div class="column text-center">
-                            <p>Casino</p>
-                        </div>
-                        <div class="column text-center">
-                            <p>Bonus</p>
-                        </div>
-                        <div class="column text-center">
-                            <p>Features</p>
-                        </div>
-                        <div class="column text-center">
-                            <p>Play</p>
-                        </div>
-                    </header>
-
-                    <main class="reviews-content">
-
-                        <!-- Review -->
-                        <?php foreach($json_data as $review) : ?>
-                            <div class="review d-flex flex-wrap flex-a-center">
-                                <div class="column d-flex flex-column text-center">
-                                    <img src="<?php echo $review->logo; ?>" alt="<?php echo $review->brand_id; ?>" class="logo">
-                                    <a href="<?php echo $review->play_url . "/" . $review->brand_id; ?>" class="review">Review</a>
-                                </div>
-                                <div class="column text-center">
-                                    <p class="rating">
-                                        <?php
-                                            switch($review->info->rating) {
-                                                case 0:
-                                                    echo "<i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-                                                    break;
-                                                case 1:
-                                                    echo "<i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-                                                    break;
-                                                case 2:
-                                                    echo "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-                                                    break;
-                                                case 3:
-                                                    echo "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-                                                    break;
-                                                case 4:
-                                                    echo "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i>";
-                                                    break;
-                                                case 5:
-                                                    echo "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
-                                                    break;                      
-                                            }
-                                        ?>
-                                    </p>
-                                    <p class="bonus"><?php echo $review->info->bonus; ?></p>
-                                </div>
-                                <div class="column d-flex flex-j-center">
-                                    <ul class="features">
-                                        <?php foreach($review->info->features as $feature) : ?>
-                                            <li><?php echo $feature; ?></li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </div>
-                                <div class="column text-center">
-                                    <a href="<?php echo $review->play_url; ?>" class="play-now button primary">Play Now</a>
-                                    <p class="tos"><?php echo $review->terms_and_conditions; ?></p>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-
-                    </main><!-- .reviews-content -->
-                </article><!-- .reviews -->
-    <?php
+    $view = "
+        <article class='reviews'>
+            <header class='reviews-header d-flex flex-wrap'>
+                <div class='column text-center'>
+                    <p>Casino</p>
+                </div>
+                <div class='column text-center'>
+                    <p>Bonus</p>
+                </div>
+                <div class='column text-center'>
+                    <p>Features</p>
+                </div>
+                <div class='column text-center'>
+                    <p>Play</p>
+                </div>
+            </header>
+            
+            
+            <main class='reviews-content'>
+                {$reviews_view}
+            </main>
+        </article>
+    ";
+    
+    return $view;
+    
 }
 add_shortcode('reviews', 'reviews_view');
 
